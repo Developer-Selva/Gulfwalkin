@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmployeeVerificationMail;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
@@ -17,36 +18,52 @@ class EmployeeController extends Controller
 
     public function register(Request $request)
     {
-        // Validation
-        $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
-            'gender' => 'required|string', // You should validate 'gender' if it's a required field
-            'email' => 'required|email|unique:employees',
-            'password' => 'required|confirmed',
-            'resume' => 'nullable|mimes:pdf,docx,txt|max:10240',
+        // Validate form data
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'gender' => 'required|string',
+            'date_of_birth' => 'required|date',
+            'education_qualification' => 'nullable|string|max:255',
+            'phone' => 'required|string|max:15',
+            'resume' => 'required|file|mimes:pdf|max:2048',
+            'terms' => 'accepted',
         ]);
 
-        // Store the resume if uploaded
-        $resumePath = null;
-        if ($request->hasFile('resume')) {
-            $resumePath = $request->file('resume')->store('resumes');
+        // Check if validation fails
+        if ($validator->fails()) {
+            return redirect()->route('employee.register')
+                             ->withErrors($validator)
+                             ->withInput();
         }
 
-        // Store employee
-        $employee = Employee::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'gender' => $request->gender,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'resume_path' => $resumePath,
-        ]);
+        // Handle resume file upload
+        $resumePath = $request->file('resume')->store('resumes', 'public');
 
-        // Send verification email
-        Mail::to($employee->email)->send(new EmployeeVerificationMail());
+        // Create employee record
+        $employee = new Employee();
+        $employee->first_name = $request->first_name;
+        $employee->last_name = $request->last_name;
+        $employee->gender = $request->gender;
+        $employee->date_of_birth = $request->date_of_birth;
+        $employee->education_qualification = $request->education_qualification;
+        $employee->phone = $request->phone;
+        $employee->resume = $resumePath;
+        $employee->email = $request->email;
+        $employee->password = bcrypt($request->password);
 
-        // Redirect to registration page with success message
-        return redirect()->route('employee.register')->with('status', 'Check your email for verification');
+        // Capture IP address and browser details
+        $employee->ip_address = $request->ip(); // Get client IP address
+        $employee->browser = $request->header('User-Agent'); // Get client browser user-agent
+
+        // Save employee data
+        $employee->save();
+
+        // Send the verification email
+        Mail::to($request->email)->send(new EmployeeVerificationMail($employee));
+
+        // Return response
+        return redirect()->route('employee.register')
+                         ->with('success', 'Registration successful! Please verify your email.');
     }
 }

@@ -41,7 +41,7 @@ class EmployeeVerificationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'view.emails.employer_verification.blade.php',
         );
     }
 

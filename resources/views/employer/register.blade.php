@@ -1,3 +1,4 @@
+<!-- resources/views/employer/register.blade.php -->
 @extends('layouts.app')
 
 @section('content')
@@ -19,13 +20,18 @@
         <div class="form-group">
             <label for="country">Country</label>
             <select class="form-control @error('country') is-invalid @enderror" id="country" name="country" required>
-                <option value="USA" {{ old('country') == 'USA' ? 'selected' : '' }}>USA</option>
-                <!-- Add other countries as required -->
+                <option value="">Select Country</option>
+                @foreach ($countries as $countryCode => $countryName)
+                    <option value="{{ $countryCode }}" {{ old('country') == $countryCode ? 'selected' : '' }}>
+                        {{ $countryName }}
+                    </option>
+                @endforeach
             </select>
             @error('country')
                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
             @enderror
         </div>
+
 
         <!-- Place -->
         <div class="form-group">

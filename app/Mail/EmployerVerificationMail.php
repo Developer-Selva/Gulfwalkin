@@ -8,21 +8,27 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Employer;
 
 class EmployerVerificationMail extends Mailable
 {
     use Queueable, SerializesModels;
+    // Define the properties you need to pass
+    public $employer;
+    public $verificationCode;
+
+    // Constructor to accept the employer and verification code
+    public function __construct(Employer $employer)
+    {
+        $this->employer = $employer;
+        $this->verificationCode = $employer->verification_code; // Get the verification code from the employer model
+    }
+
+    // Build the email
     public function build()
     {
-        return $this->view('emails.employer_verification')
-                    ->with(['code' => $this->verificationCode]);
-    }
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
-    {
-        //
+        return $this->subject('Verify Your Employer Account')
+                    ->view('emails.employer_verification'); // Reference the email view view.emails.employer_verification.blade.php
     }
 
     /**
