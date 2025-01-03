@@ -1,3 +1,11 @@
-@tailwind base;
+/* resources\css\app.css */
+/* Import Bootstrap first */
+@import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import '/resources/css/login.css';
+@import '/resources/css/custom.css';
+@import '/resources/css/layout.css';
+@import '/resources/css/darkblue.css';
+
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
