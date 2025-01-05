@@ -20,7 +20,39 @@
         <!-- Vite for CSS and JS assets -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="login">
+    <body class="{{ request()->is('employer/register') ? 'login' : '' }}">
+            <!-- First Header: Social Links -->
+    @if (!Auth::check()) <!-- Show this for non-logged in users -->
+    <header class="top-header bg-light py-2">
+        <div class="container">
+            <ul class="list-inline text-center mb-0">
+                <li class="list-inline-item"><a href="#" class="text-dark">Facebook</a></li>
+                <li class="list-inline-item"><a href="#" class="text-dark">LinkedIn</a></li>
+                <li class="list-inline-item"><a href="#" class="text-dark">Twitter</a></li>
+                <li class="list-inline-item"><a href="#" class="text-dark">Pinterest</a></li>
+                <li class="list-inline-item"><a href="#" class="text-dark">Employer Games</a></li>
+            </ul>
+        </div>
+    </header>
+    @endif
+
+    <!-- Second Header: Navigation Links -->
+    @if (!Auth::check()) <!-- Show this for non-logged in users -->
+    <header class="navbar navbar-expand-lg navbar-dark bg-blue">
+        <div class="container-fluid">
+            <nav>
+                <ul class="nav justify-content-center">
+                    <li class="nav-item"><a href="#" class="nav-link text-white">JOBS</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white">EMPLOYERS</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white">JOB CATEGORIES</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white">ABOUT</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white">CONTACT</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white">EMPLOYEE</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    @endif
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
