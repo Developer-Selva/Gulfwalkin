@@ -33,22 +33,22 @@ class EmployerController extends Controller
             'country' => 'required|string|max:255',
             'place' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'po_box_no' => 'required|string|max:255',
+            'po_box_no' => 'required|numeric|max:255',
             'contact_person_1' => 'required|string|max:255',
-            'contact_number_1' => 'required|string|max:15',
+            'contact_number_1' => 'required|numeric|max:10',
             'email' => 'required|email|unique:employers,email',
             'password' => 'required|string|min:8|confirmed',
-            'verification_code' => 'required|string|min:4|max:4',
-            'terms' => 'accepted',
+            'verification_code' => 'required|numeric|min:4|max:4',
+            'terms' => 'accepted', // Make sure to add this for checkbox validation
         ]);
-
+    
         // Check if validation fails
         if ($validator->fails()) {
             return redirect()->route('employer.register')
                              ->withErrors($validator)
                              ->withInput();
         }
-
+    
         // Create employer record
         $employer = new Employer();
         $employer->company_name = $request->company_name;
@@ -61,21 +61,20 @@ class EmployerController extends Controller
         $employer->email = $request->email;
         $employer->password = bcrypt($request->password);
         $employer->verification_code = $request->verification_code;
-
+    
         // Capture IP address and browser details
         $ip = $request->header('X-Forwarded-For') ?: $request->ip();
         $employer->ip_address = $ip; // Get client IP address
-        
         $employer->browser = $request->header('User-Agent'); // Get client browser user-agent
-
+    
         // Save employer data
         $employer->save();
-
+    
         // Send the verification email
         Mail::to($request->email)->send(new EmployerVerificationMail($employer));
-
-        // Return response
+    
+        // Return success message
         return redirect()->route('employer.register')
                          ->with('success', 'Registration successful! Please verify your email.');
-    }
+    }    
 }
