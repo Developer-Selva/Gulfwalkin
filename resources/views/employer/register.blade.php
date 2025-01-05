@@ -278,3 +278,25 @@
     </form>
 </div>
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        $('#register-btn').on('click', function(){
+            $('.register-form').show();
+            $('.login-form').hide();
+        });
+        $('#register-back-btn').on('click', function(){
+            $('.login-form').show();
+            $('.register-form').hide();
+        });
+        $('#forget-password').on('click', function(){
+            $('.forget-form').show();
+            $('.login-form').hide();
+        });
+        $('#back-btn').on('click', function(){
+            $('.forget-form').hide();
+            $('.login-form').show();
+        });
+    });
+</script>
+@endpush
