@@ -48,8 +48,11 @@ class EmployeeController extends Controller
         $employee->date_of_birth = $request->date_of_birth;
         $employee->education_qualification = $request->education_qualification;
         $employee->phone = $request->phone;
-        $employee->resume = $resumePath;
+        $employee->resume_path = $resumePath;
+
         $employee->email = $request->email;
+        $employee->address = $request->country;
+
         $employee->password = bcrypt($request->password);
 
         // Capture IP address and browser details
@@ -60,7 +63,7 @@ class EmployeeController extends Controller
         $employee->save();
 
         // Send the verification email
-        Mail::to($request->email)->send(new EmployeeVerificationMail($employee));
+        // Mail::to($request->email)->send(new EmployeeVerificationMail($employee));
 
         // Return response
         return redirect()->route('employee.register')

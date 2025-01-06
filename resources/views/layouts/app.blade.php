@@ -12,15 +12,15 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <!-- Conditionally load Bootstrap for specific pages -->
-        @if(Route::currentRouteName() == 'employer.register') <!-- Or any other page where you want Bootstrap -->
+        {{--  <!-- Conditionally load Bootstrap for specific pages -->
+        @if(Route::currentRouteName() == 'register') <!-- Or any other page where you want Bootstrap -->
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-        @endif
+        @endif  --}}
 
         <!-- Vite for CSS and JS assets -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="{{ request()->is('employer/register') ? 'login' : '' }}">
+    <body class="{{ (request()->is('employer/register') || request()->is('employee/register'))? 'login' : '' }}">
             <!-- First Header: Social Links -->
     @if (!Auth::check()) <!-- Show this for non-logged in users -->
     <header class="top-header bg-light py-2">
