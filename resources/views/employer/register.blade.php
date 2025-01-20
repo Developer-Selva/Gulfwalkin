@@ -187,7 +187,7 @@
     <!-- Terms & Conditions -->
     <div class="form-group margin-top-20 margin-bottom-20">
 			<label class="check">
-			<input type="checkbox" name="chkAccept" id="chkAccept" value="1"/> I agree to the <a href="../terms-and-conditions.php">
+			<input type="checkbox" name="terms" id="terms" value="1"/> I agree to the <a href="../terms-and-conditions.php">
 			Terms of Service </a>
 			& <a href="../legalprivacy.php">
 			Privacy Policy </a>

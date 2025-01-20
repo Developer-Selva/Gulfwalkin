@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\EmployerVerificationMail;
 use Illuminate\Support\Facades\Validator;
 use Webpatser\Countries\Countries;
+use Illuminate\Support\Facades\Log;
 
 class EmployerController extends Controller
 {
@@ -33,17 +34,21 @@ class EmployerController extends Controller
             'country' => 'required|string|max:255',
             'place' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'po_box_no' => 'required|numeric|max:255',
+            'po_box_no' => 'required|numeric|digits_between:1,5', // Allow up to 5 digits
             'contact_person_1' => 'required|string|max:255',
-            'contact_number_1' => 'required|numeric|max:10',
+            'contact_number_1' => 'required|numeric|digits_between:1,10',
             'email' => 'required|email|unique:employers,email',
             'password' => 'required|string|min:8|confirmed',
-            'verification_code' => 'required|numeric|min:4|max:4',
+            'verification_code' => 'required|numeric|digits_between:1,7',
             'terms' => 'accepted', // Make sure to add this for checkbox validation
         ]);
-    
+        
         // Check if validation fails
         if ($validator->fails()) {
+            Log::error('Employer registration validation failed:', [
+                'errors' => $validator->errors(),
+                'input' => $request->all(), // Optionally log the input data for debugging purposes
+            ]);
             return redirect()->route('employer.register')
                              ->withErrors($validator)
                              ->withInput();
