@@ -39,6 +39,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/approve/employer/{id}', [AdminController::class, 'approveEmployer'])->name('admin.approve.employer');
     Route::get('/reject/employer/{id}', [AdminController::class, 'rejectEmployer'])->name('admin.reject.employer');
 
+    Route::get('/employer/dashboard', [AdminController::class, 'manageEmployees'])->name('employer.dashboard');
     Route::get('/manage/employees', [AdminController::class, 'manageEmployees'])->name('admin.manage.employees');
     Route::get('/approve/employee/{id}', [AdminController::class, 'approveEmployee'])->name('admin.approve.employee');
     Route::get('/deactivate/employer/{id}', [AdminController::class, 'deactivateEmployer'])->name('admin.deactivate.employer');

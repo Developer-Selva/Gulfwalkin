@@ -79,7 +79,7 @@ class EmployerController extends Controller
         Mail::to($request->email)->send(new EmployerVerificationMail($employer));
     
         // Return success message
-        return redirect()->route('employer.register')
+        return redirect()->route('employer.dashboard')
                          ->with('success', 'Registration successful! Please verify your email.');
     }    
 }

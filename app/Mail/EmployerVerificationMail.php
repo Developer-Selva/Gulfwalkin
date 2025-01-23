@@ -48,7 +48,7 @@ class EmployerVerificationMail extends Mailable
     {
         session()->flash('success', 'Your registration was successful!');
         return new Content(
-            view: 'admin.manage.employers',
+            view: 'admin.employers.employers',
         );
     }
 
