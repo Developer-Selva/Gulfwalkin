@@ -19,6 +19,7 @@ class EmployeeController extends Controller
     public function register(Request $request)
     {
         // Validate form data
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'nullable|string|max:255',
@@ -45,13 +46,18 @@ class EmployeeController extends Controller
         $employee->first_name = $request->first_name;
         $employee->last_name = $request->last_name;
         $employee->gender = $request->gender;
+        $employee->marital_status = $request->marital_status;
         $employee->date_of_birth = $request->date_of_birth;
         $employee->education_qualification = $request->education_qualification;
         $employee->phone = $request->phone;
         $employee->resume_path = $resumePath;
-
         $employee->email = $request->email;
-        $employee->address = $request->country;
+        
+        $employee->country = $request->country;
+        $employee->state = $request->state;
+        $employee->district = $request->district;
+        $employee->address = $request->city;
+
 
         $employee->password = bcrypt($request->password);
 
@@ -66,7 +72,6 @@ class EmployeeController extends Controller
         // Mail::to($request->email)->send(new EmployeeVerificationMail($employee));
 
         // Return response
-        return redirect()->route('employee.register')
-                         ->with('success', 'Registration successful! Please verify your email.');
+        return view('employee.dashboard')->with('success', 'Registration successful! Please verify your email.');
     }
 }

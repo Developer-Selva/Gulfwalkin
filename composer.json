@@ -7,7 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "laravel/framework": "^11.31",
+        "laravel/framework": "^11.39",
         "laravel/tinker": "^2.9",
         "webpatser/laravel-countries": "^1.5"
     },

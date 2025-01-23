@@ -9,7 +9,7 @@
         <!-- First Name -->
         <div class="form-group">
             <label class="control-label" for="first_name">First Name</label>
-            <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" value="{{ old('first_name') }}" required>
+            <input type="text" class="txtOnly form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" maxlength="30" value="{{ old('first_name') }}" required>
             @error('first_name')
                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
             @enderror
@@ -18,7 +18,7 @@
         <!-- Last Name -->
         <div class="form-group">
             <label class="control-label" for="last_name">Last Name</label>
-            <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name" name="last_name" value="{{ old('last_name') }}">
+            <input type="text" class="txtOnly form-control @error('last_name') is-invalid @enderror" id="last_name" name="last_name" maxlength="30" value="{{ old('last_name') }}">
             @error('last_name')
                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
             @enderror
@@ -61,7 +61,7 @@
         <!-- Education Qualification -->
         <div class="form-group">
             <label class="control-label" for="education_qualification">Education Qualification</label>
-            <input type="text" class="form-control @error('education_qualification') is-invalid @enderror" id="education_qualification" name="education_qualification" value="{{ old('education_qualification') }}">
+            <input type="text" class="txtOnly form-control @error('education_qualification') is-invalid @enderror" id="education_qualification" name="education_qualification" value="{{ old('education_qualification') }}">
             @error('education_qualification')
                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
             @enderror
@@ -70,7 +70,7 @@
         <!-- Phone -->
         <div class="form-group">
             <label class="control-label" for="phone">Phone</label>
-            <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}" required>
+            <input type="text" class="form-control phNumOnly @error('phone') is-invalid @enderror" id="phone" name="phone" maxlength="10" value="{{ old('phone') }}" required>
             @error('phone')
                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
             @enderror
@@ -135,7 +135,7 @@
          <!-- Email -->
         <div class="form-group">
             <label class="control-label" for="email">Email<span class="mandatory-icon">*</span></label>
-            <input class="form-control" type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
+            <input  type="email" class="emailValidation form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
             @error('email')
                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
             @enderror
@@ -144,7 +144,7 @@
         <!-- Password -->
         <div class="form-group">
             <label class="control-label" for="password">Password<span class="mandatory-icon">*</span></label>
-            <input class="form-control" type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
+            <input  type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
             @error('password')
                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
             @enderror
@@ -153,7 +153,7 @@
         <!-- Confirm Password -->
         <div class="form-group">
             <label class="control-label" for="password_confirmation">Confirm Password<span class="mandatory-icon">*</span></label>
-            <input class="form-control" type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+            <input  type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
         </div>
 
         <!-- Resume -->
@@ -175,4 +175,5 @@
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
 </div>
+@include('employee.script')
 @endsection
