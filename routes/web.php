@@ -1,17 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\AdminController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -51,4 +45,4 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/deactivate/employer/{id}', [AdminController::class, 'deactivateEmployer'])->name('admin.deactivate.employer');
     Route::get('/deactivate/employee/{id}', [AdminController::class, 'deactivateEmployee'])->name('admin.deactivate.employee');
 });
-require __DIR__.'/auth.php';
+// require __DIR__.'/auth.php';
