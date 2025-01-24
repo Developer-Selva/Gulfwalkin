@@ -78,7 +78,7 @@ class EmployeeController extends Controller
         Auth::login($employee,true);
 
         // Return response
-        return redirect()->route('employee.dashboard')->flash('success', 'Registration successful! Please verify your email.');
+        return redirect()->route('employee.dashboard')->with('success', 'Registration successful! Please verify your email.');
     }
 
     public function login(Request $request){
