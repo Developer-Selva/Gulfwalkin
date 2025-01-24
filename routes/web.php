@@ -45,4 +45,4 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/deactivate/employer/{id}', [AdminController::class, 'deactivateEmployer'])->name('admin.deactivate.employer');
     Route::get('/deactivate/employee/{id}', [AdminController::class, 'deactivateEmployee'])->name('admin.deactivate.employee');
 });
-require __DIR__.'/auth.php';
+// require __DIR__.'/auth.php';
