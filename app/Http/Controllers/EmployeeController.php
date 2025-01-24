@@ -8,11 +8,16 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmployeeVerificationMail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+
 
 class EmployeeController extends Controller
 {
     public function showRegistrationForm()
     {
+        if(Auth::check()){
+            return redirect()->route('employee.dashboard');
+        }
         return view('employee.register');
     }
 
@@ -32,11 +37,11 @@ class EmployeeController extends Controller
         ]);
 
         // Check if validation fails
-        if ($validator->fails()) {
-            return redirect()->route('employee.register')
-                             ->withErrors($validator)
-                             ->withInput();
-        }
+        // if ($validator->fails()) {
+        //     return redirect()->route('employee.register')
+        //                      ->withErrors($validator)
+        //                      ->withInput();
+        // }
 
         // Handle resume file upload
         $resumePath = $request->file('resume')->store('resumes', 'public');
@@ -52,7 +57,7 @@ class EmployeeController extends Controller
         $employee->phone = $request->phone;
         $employee->resume_path = $resumePath;
         $employee->email = $request->email;
-        
+
         $employee->country = $request->country;
         $employee->state = $request->state;
         $employee->district = $request->district;
@@ -70,8 +75,29 @@ class EmployeeController extends Controller
 
         // Send the verification email
         // Mail::to($request->email)->send(new EmployeeVerificationMail($employee));
+        Auth::login($employee,true);
 
         // Return response
-        return view('employee.dashboard')->with('success', 'Registration successful! Please verify your email.');
+        return redirect()->route('employee.dashboard')->flash('success', 'Registration successful! Please verify your email.');
+    }
+
+    public function login(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            dd('here');
+            return redirect()->to('/employee/register')
+                             ->withErrors($validator)
+                             ->withInput();
+        }
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            return redirect()->route('employee.dashboard')->with('success', 'Successfully logged in');
+        } else {
+            return  redirect()->to('/employee/register')->with('error', 'Invalid credentials, please try again.');
+        }
     }
 }

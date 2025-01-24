@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container content">
+<div class="container content registerDiv" style="display:none">
     <h1>Employee Registration</h1>
     <form method="POST" action="{{ url('/employee/register') }}" enctype="multipart/form-data" class="login-form">
         @csrf
@@ -171,9 +171,70 @@
             <label class="control-label" class="form-check-label" for="terms">I agree to the <a href="#">Terms of Service & Privacy Policy</a></label>
         </div>
 
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary">Register</button>
+        <div class="form-actions">
+			<button type="button" id="register-back-btn" class="btn btn-default">Back</button>&nbsp;&nbsp;<span style="display:none;" id="cmpcmnloadreg"><img src="../assets/global/img/loading.gif" alt="" title=""></span>
+			<input type="submit" name="regSubBtn" id="regSubBtn" value="Register" class="btn btn-success uppercase pull-right">
+		</div>
+
     </form>
+</div>
+
+<div class="container content loginDiv">
+	<!-- BEGIN LOGIN FORM -->
+
+	<form class="login-form" name="logCmpfrm" id="logCmpfrm" method="post" action="{{ url('/employee/login') }}" enctype="multipart/form-data" novalidate="novalidate">
+		<h3 class="form-title">EMPLOYEE SIGN IN</h3>
+		<div class="alert alert-danger" id="errCmpMsg" style="display:none;">
+			<strong>Please Fill All Fields !</strong>
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">Email</label>
+			<input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Email ID" name="email" id="txtCmpEmail">
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">Password</label>
+			<input class="form-control form-control-solid placeholder-no-fix" autocomplete="off" placeholder="Password" type="password" name="password" id="txtCmpPwd">
+		</div>
+		<div class="form-actions">
+			<input type="submit" name="btnCmpLogn" value="Login" id="btnCmpLogn" class="btn btn-success uppercase">&nbsp;&nbsp;<span style="display:none;" id="cmpcmnloadcntct"><img src="../assets/global/img/loading.gif" alt="" title=""></span>
+			<a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
+		</div>
+		<div class="create-account clsCreateAcc">
+			<p>
+				<a href="javascript:void(0);" id="register-btn" class="uppercase" style="text-decoration: none;">Create an account</a>
+			</p>
+		</div>
+        @csrf
+	</form>
+	<!-- END LOGIN FORM -->
+
+	<!-- BEGIN FORGOT PASSWORD FORM -->
+	{{-- <form class="forget-form" name="fgtForm" id="fgtForm" autocomplete="off" novalidate="novalidate">
+		<h3>FORGOT PASSWORD ?</h3>
+		<p>
+			 Enter your e-mail address below to reset your password.
+		</p>
+		<div class="alert alert-danger" style="display:none;" id="errFgtMsg">
+			<strong>Something went wrong. Please Try Again !</strong>
+		</div>
+		<div class="alert alert-success" style="display:none;" id="succFgtMsg">
+			<strong>Check Your Email for Requested Data</strong>
+		</div>
+		<div class="form-group">
+			<label class="control-label">Email ID<span class="mandatory-icon">*</span></label>
+			<input class="form-control" type="text" name="txtEmailfgt" id="txtEmailfgt">
+		</div>
+		<div class="form-group">
+			<label class="control-label">4 Digit Code<span class="mandatory-icon">*</span></label>
+			<input class="form-control" type="text" name="txtBebcodefgt" id="txtBebcodefgt">
+		</div>
+		<div class="form-actions">
+			<button type="button" id="back-btn" class="btn btn-default">Back</button>&nbsp;&nbsp;<span style="display:none;" id="cmpcmnloadfgt"><img src="../assets/global/img/loading.gif" alt="" title=""></span>
+			<input type="submit" name="btnFgtFrm" id="btnFgtFrm" value="Submit" class="btn btn-success uppercase pull-right">
+		</div>
+	</form> --}}
+	<!-- END FORGOT PASSWORD FORM -->
+
 </div>
 @include('employee.script')
 @endsection

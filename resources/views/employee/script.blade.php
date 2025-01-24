@@ -4,22 +4,22 @@ $(document).ready(function () {
         let phoneInput = $(this).val();
         phoneInput = phoneInput.replace(/[^0-9]/g, "");
         if (phoneInput.length > 0 && /^[0-5]/.test(phoneInput.charAt(0))) {
-            phoneInput = ''; 
+            phoneInput = '';
         }
         if (phoneInput.length > 10) {
-            phoneInput = phoneInput.substring(0, 10); 
+            phoneInput = phoneInput.substring(0, 10);
         }
         $(this).val(phoneInput);
     });
 
     $(".txtOnly").on("input", function () {
         let usernameInput = $(this).val();
-        usernameInput = usernameInput.replace(/[^a-zA-Z\s]/g, ""); 
+        usernameInput = usernameInput.replace(/[^a-zA-Z\s]/g, "");
         $(this).val(usernameInput);
         if (/[^a-zA-Z\s]/g.test(usernameInput)) {
-            $("#error-message").show(); 
+            $("#error-message").show();
         } else {
-            $("#error-message").hide(); 
+            $("#error-message").hide();
         }
     });
 
@@ -29,7 +29,15 @@ $(document).ready(function () {
         const emailRegex = /^[a-zA-Z0-9]+([._%+-]*[a-zA-Z0-9])*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         $(this).val(emailInput);
     });
-
 });
 
+$('body').on('click','.clsCreateAcc',function(){
+    $('.loginDiv').hide();
+    $('.registerDiv').show();
+});
+
+$('body').on('click','#register-back-btn',function(){
+    $('.loginDiv').show();
+    $('.registerDiv').hide();
+});
 </script>

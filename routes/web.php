@@ -13,20 +13,37 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 // Employer Routes
 Route::get('/employer/register', [EmployerController::class, 'showRegistrationForm']);
 Route::post('/employer/register', [EmployerController::class, 'register']);
 
+
 // Employee Routes
 Route::get('/employee/register', [EmployeeController::class, 'showRegistrationForm']);
 Route::post('/employee/register', [EmployeeController::class, 'register']);
+Route::post('/employee/login', [EmployeeController::class, 'login']);
+
+Route::get('/logout', [ProfileController::class, 'logout'])->name('logout');
+Route::get('/dashboard', function () {
+    return view('employee.dashboard');
+})->middleware(['auth', 'employee'])->name('employee.dashboard');
+
+
+
+
+
+
+
+
 
 // Admin Routes
 Route::middleware(['auth', 'admin'])->group(function () {

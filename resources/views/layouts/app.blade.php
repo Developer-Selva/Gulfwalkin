@@ -12,15 +12,32 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        {{--  <!-- Conditionally load Bootstrap for specific pages -->
-        @if(Route::currentRouteName() == 'register') <!-- Or any other page where you want Bootstrap -->
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-        @endif  --}}
-
-        <!-- Vite for CSS and JS assets -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="{{ (request()->is('employer/register') || request()->is('employee/register'))? 'login' : '' }}">
+        @if(session('success'))
+            <div class="phpMsg alert alert-success">
+                {{ session('success') }}
+            </div>
+            <script>
+                setTimeout(function() {
+                    $('.phpMsg').hide();
+                }, 5000);
+            </script>
+        @endif
+
+        @if(session('error'))
+            <div class="phpMsg alert alert-danger">
+                {{ session('error') }}
+            </div>
+            <script>
+                setTimeout(function() {
+                    $('.phpMsg').hide();
+                }, 5000);
+            </script>
+        @endif
+
+
             <!-- First Header: Social Links -->
     @if (!Auth::check()) <!-- Show this for non-logged in users -->
     <header class="top-header bg-light py-2">
@@ -47,7 +64,7 @@
                     <li class="nav-item"><a href="#" class="nav-link text-white">JOB CATEGORIES</a></li>
                     <li class="nav-item"><a href="#" class="nav-link text-white">ABOUT</a></li>
                     <li class="nav-item"><a href="#" class="nav-link text-white">CONTACT</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-white">EMPLOYEE</a></li>
+                    <li class="nav-item"><a href="/employee/register" class="nav-link text-white">EMPLOYEE</a></li>
                 </ul>
             </nav>
         </div>
