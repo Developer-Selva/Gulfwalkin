@@ -23,7 +23,6 @@ return new class extends Migration
             $table->text('address');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('remember_token')->nullable();
             $table->string('resume_path')->nullable();
             $table->timestamps();
         });
