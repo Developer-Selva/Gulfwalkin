@@ -1,3 +1,4 @@
+<!-- resources\views\layouts\app.blade.php -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -5,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Gulfwalkin') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -69,6 +70,14 @@
             </nav>
         </div>
     </header>
+    <section class="container-fluid hide-below-545px">
+	<div class="row search-container">
+		<form class="form-wrapper" action="">
+			<input type="text" name="txtSearch"  placeholder="Enter Keywords" required>
+			<button type="submit">Search</button>
+		</form>
+	</div>
+</section>
     @endif
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
@@ -87,6 +96,7 @@
                 @yield('content')
             </main>
         </div>
+        @include('partials.footer')
         @stack('scripts')
     </body>
 </html>
