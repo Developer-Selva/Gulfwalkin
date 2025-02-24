@@ -36,6 +36,15 @@ Route::get('/employee/register', [EmployeeController::class, 'showRegistrationFo
 Route::post('/employee/register', [EmployeeController::class, 'register']);
 Route::post('/employee/login', [EmployeeController::class, 'login']);
 
+
+//Comon Routes
+Route::post('/sendOtp', [ProfileController::class, 'sendOtp'])->name('sendOtp');
+Route::post('/verifyOtp', [ProfileController::class, 'verifyOtp'])->name('verifyOtp');
+Route::post('/reset_password', [ProfileController::class, 'resetPassword'])->name('reset_password');
+
+
+
+
 Route::get('/logout', [ProfileController::class, 'logout'])->name('logout');
 Route::get('/dashboard', function () {
     return view('employee.dashboard');
