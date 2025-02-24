@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->string('education_qualification')->nullable();
             $table->string('phone');
+            $table->string('otp')->nullable();
             $table->text('address');
             $table->string('email')->unique();
             $table->string('password');
@@ -27,7 +28,7 @@ return new class extends Migration
             $table->string('resume_path')->nullable();
             $table->timestamps();
         });
-    }    
+    }
 
     /**
      * Reverse the migrations.
