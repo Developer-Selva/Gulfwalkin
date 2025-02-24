@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Employee;
+
 
 class ProfileController extends Controller
 {
@@ -56,5 +58,70 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function sendOtp(Request $request){
+
+        if (!$request->email && !$request->type) {
+            return response()->json([
+                'status' => '400',
+                'message' => __("Please enter a valid email"),
+                'message_class' => ''
+            ]);
+        }
+        $employee = Employee::where('email',$request->email)->first();
+        if(!$employee){
+            return response()->json([
+                'status' => '400',
+                'message' => __("User not found"),
+                'message_class' => ''
+            ]);
+        }
+        // $otp = rand(100000,999999);
+        $otp = 123456;
+        $employee->otp = $otp;
+        $employee->save();
+        return response()->json([
+            'status' => '200',
+            'message' => __("OTP sent successfully"),
+            'message_class' => ''
+        ]);
+    }
+
+    public function verifyOtp(Request $request){
+
+        if (!$request->email || !$request->type || !$request->otp) {
+            return response()->json([
+                'status' => '400',
+                'message' => __("Please enter a valid details"),
+                'message_class' => ''
+            ]);
+        }
+        return response()->json([
+            'status' => '200',
+            'message' => __("OTP verified successfully"),
+            'message_class' => ''
+        ]);
+    }
+
+    public function resetPassword(Request $request){
+
+        if (!$request->email || !$request->password || !$request->otp) {
+            return response()->json([
+                'status' => '400',
+                'message' => __("Please enter a valid details"),
+                'message_class' => ''
+            ]);
+        }
+        return response()->json([
+            'status' => '200',
+            'message' => __("OTP verified successfully"),
+            'message_class' => ''
+        ]);
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect()->to('/')->with('success', 'Logout successfully');
     }
 }
