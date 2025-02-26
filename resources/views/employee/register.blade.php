@@ -306,7 +306,7 @@
                 <input class="form-control clsParFrgtEm" disabled type="text" name="txtEmailfgt" id="txtEmailfgt2">
             </div>
             <div class="otp-inputs">
-                <input type="text" maxlength="1" class="otp-input">
+                <input type="text" maxlength="1" class="otp-input otp_first">
                 <input type="text" maxlength="1" class="otp-input">
                 <input type="text" maxlength="1" class="otp-input">
                 <input type="text" maxlength="1" class="otp-input">
@@ -324,7 +324,7 @@
 
 
     <div class="container clsRegComDiv content resetPwdDiv" style="display:none">
-        <div class="container otp-section">
+        <div class="otp-section">
             <h3>Change Password</h3>
             <div class="form-group">
                 <label class="control-label">Email ID</label>

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Hash;
 
 
 class ProfileController extends Controller
@@ -90,13 +91,38 @@ class ProfileController extends Controller
 
     public function verifyOtp(Request $request){
 
-        if (!$request->email || !$request->type || !$request->otp) {
+        if (!$request->email || !$request->type || !$request->otp ) {
             return response()->json([
                 'status' => '400',
                 'message' => __("Please enter a valid details"),
                 'message_class' => ''
             ]);
         }
+        if(strlen($request->otp) != 6){
+            return response()->json([
+                'status' => '400',
+                'message' => __("Invalid OTP"),
+                'message_class' => ''
+            ]);
+        }
+
+        $employee = Employee::where('email',$request->email)->first();
+        if(!$employee){
+            return response()->json([
+                'status' => '400',
+                'message' => __("User not found"),
+                'message_class' => ''
+            ]);
+        }
+
+        if($request->otp != $employee->otp){
+            return response()->json([
+                'status' => '400',
+                'message' => __("Invalid OTP"),
+                'message_class' => ''
+            ]);
+        }
+
         return response()->json([
             'status' => '200',
             'message' => __("OTP verified successfully"),
@@ -105,7 +131,6 @@ class ProfileController extends Controller
     }
 
     public function resetPassword(Request $request){
-
         if (!$request->email || !$request->password || !$request->otp) {
             return response()->json([
                 'status' => '400',
@@ -113,9 +138,30 @@ class ProfileController extends Controller
                 'message_class' => ''
             ]);
         }
+
+        $employee = Employee::where('email',$request->email)->first();
+        if(!$employee){
+            return response()->json([
+                'status' => '400',
+                'message' => __("User not found"),
+                'message_class' => ''
+            ]);
+        }
+
+        if($request->otp != $employee->otp){
+            return response()->json([
+                'status' => '400',
+                'message' => __("Illegal Access"),
+                'message_class' => ''
+            ]);
+        }
+
+        $employee->password = Hash::make($request->password);
+        $employee->save();
+    
         return response()->json([
             'status' => '200',
-            'message' => __("OTP verified successfully"),
+            'message' => "Password Changed successfully",
             'message_class' => ''
         ]);
     }

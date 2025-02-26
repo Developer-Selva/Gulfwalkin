@@ -144,6 +144,7 @@
                 $('.clsRegComDiv').hide();
                 $('.frgtOtpDiv').show();
                 $('.clsParFrgtEm').val(email);
+                $('.otp_first').focus();
             }
         },
         error: function(response) {
